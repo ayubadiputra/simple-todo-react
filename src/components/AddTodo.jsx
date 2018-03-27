@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
-import styles from './AddTodo.css';
+import './AddTodo.scss';
 
 class MTAddTodo extends Component {
   render() {
     return (
-      <div className={styles.container}>
-        <h2 className={styles.header}>What do you want to do today?</h2>
-        <form className={styles.form}>
-          <input type="text" name="task" className={styles.input} />
+      <div className="mt-addtodo">
+        <h2 className="mt-addtodo__title">
+          What do you want to do today?
+        </h2>
+        <form className="mt-addtodo__form">
+          <input type="text" name="task" className="mt-addtodo__form__input" placeholder="Type a task, then press enter ... " />
         </form>
       </div>
     );

@@ -1,14 +1,35 @@
 import React, { Component } from 'react';
-import styles from './TodoItem.css';
+import classNames from 'classnames';
+import Icon from './icon/Icon';
+import './TodoItem.scss';
 
 class MTTodoItem extends Component {
   render() {
+    const task = this.props.task;
+
+    const labelClass = classNames({
+      'mt-todoitem__label': true,
+      'mt-todoitem__label--completed': task.active
+    });
+
     return (
-      <li key="1">
-        <input name="task-item" className={styles.input} value="Task number 1" />
-        <div className={styles.label}>Task number 1</div>
-        <a href="#" className={styles.edit}>Edit</a>
-        <a href="#" className={styles.remove}>Remove</a>
+      <li key={task.id} className="mt-todoitem">
+        <label className="mt-todoitem__checkbox">
+          <input type="checkbox" defaultChecked={task.active} />
+          <span className="mt-todoitem__checkbox__checkmark"></span>
+        </label>
+        <input className="mt-todoitem__input" value={task.title} />
+        <label className={labelClass}>
+          {task.title}
+        </label>
+        <div className="mt-todoitem__actions">
+          <a href="#" className="mt-todoitem__actions__edit">
+            <Icon name="edit" color="#00b894" />
+          </a>
+          <a href="#" className="mt-todoitem__actions__remove">
+            <Icon name="trash" color="#d63031" />
+          </a>
+        </div>
       </li>
     );
   }
