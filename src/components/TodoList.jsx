@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import MTTodoItem from './TodoItem';
-import styles from './TodoList.css';
+import styles from './TodoList.scss';
 
 class MTTodoList extends Component {
   render() {

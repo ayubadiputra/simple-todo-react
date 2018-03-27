@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styles from './TodoItem.css';
+import styles from './TodoItem.scss';
 
 class MTTodoItem extends Component {
   render() {
