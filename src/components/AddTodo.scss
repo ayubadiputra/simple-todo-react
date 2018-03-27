@@ -3,13 +3,13 @@
 	margin-bottom: 30px;
 
 	&__title {
+		margin-top: 0;
 		color: #384046;
 		font-weight: 400;
 		font-size: 1.9em;
 	}
 
 	&__form {
-		margin-bottom: 15px;
 		display: block;
 
 		&__input {
@@ -22,6 +22,7 @@
 		    color: #485056;
 			box-sizing: border-box;
 			transition: all ease 0.3s;
+			font-family: 'Source Sans Pro', sans-serif;
 
 			&:focus {
 				border-bottom: 2px solid #0fb9b1;
