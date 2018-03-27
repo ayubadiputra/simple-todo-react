@@ -42,9 +42,9 @@ class App extends Component {
 			}
 		} );
 
-		this.setState( prevState => ({
-			tasks: tasks,
-		}));
+		this.setState({
+			tasks: tasks
+		});
 	}
 
 	render() {
