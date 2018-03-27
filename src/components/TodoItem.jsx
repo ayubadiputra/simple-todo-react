@@ -4,6 +4,15 @@ import Icon from './icon/Icon';
 import './TodoItem.scss';
 
 class MTTodoItem extends Component {
+  constructor( props ) {
+    super( props );
+    this.handleComplete = this.handleComplete.bind( this );
+  }
+
+  handleComplete(e) {
+    this.props.completeTask( e.target.value, e.target.checked );
+  }
+
   render() {
     const task = this.props.task;
 
@@ -15,7 +24,7 @@ class MTTodoItem extends Component {
     return (
       <li key={task.id} className="mt-todoitem">
         <label className="mt-todoitem__checkbox">
-          <input type="checkbox" defaultChecked={! task.active} />
+          <input type="checkbox" defaultChecked={! task.active} value={task.id} onClick={this.handleComplete} />
           <span className="mt-todoitem__checkbox__checkmark"></span>
         </label>
         <input className="mt-todoitem__input" value={task.title} />

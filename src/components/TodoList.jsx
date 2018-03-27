@@ -9,11 +9,9 @@ class MTTodoList extends Component {
     return (
       <div className="mt-todolist">
         <ul className="mt-todolist__list">
-          {
-            tasks.map( (task) =>
-              <MTTodoItem key={task.id} task={task} />
-            )
-          }
+          { tasks.map( (task) =>
+              <MTTodoItem key={task.id} task={task} completeTask={this.props.completeTask} />
+          ) }
         </ul>
         <div className="mt-todolist__filters">
           <a id="all" href="#all">All</a>
