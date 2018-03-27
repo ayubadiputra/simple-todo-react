@@ -11,7 +11,7 @@ class MTTodoList extends Component {
         <ul className="mt-todolist__list">
           {
             tasks.map( (task) =>
-              <MTTodoItem task={task} />
+              <MTTodoItem key={task.id} task={task} />
             )
           }
         </ul>

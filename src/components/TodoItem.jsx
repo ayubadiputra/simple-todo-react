@@ -9,13 +9,13 @@ class MTTodoItem extends Component {
 
     const labelClass = classNames({
       'mt-todoitem__label': true,
-      'mt-todoitem__label--completed': task.active
+      'mt-todoitem__label--completed': ! task.active
     });
 
     return (
       <li key={task.id} className="mt-todoitem">
         <label className="mt-todoitem__checkbox">
-          <input type="checkbox" defaultChecked={task.active} />
+          <input type="checkbox" defaultChecked={! task.active} />
           <span className="mt-todoitem__checkbox__checkmark"></span>
         </label>
         <input className="mt-todoitem__input" value={task.title} />

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import MTAddTodo from './components/AddTodo';
 import MTTodoList from './components/TodoList';
+import uniqid from 'uniqid';
 import './App.scss';
 
 // Dummy data for demo.
@@ -10,8 +11,20 @@ class App extends Component {
 	constructor( props ) {
 		super( props );
 		this.state = {
-			tasks: tasks
+			tasks: tasks,
 		};
+		this.onTaskSubmit = this.onTaskSubmit.bind( this );
+	}
+
+	onTaskSubmit( title ) {
+		const data = {
+			id: uniqid(),
+			title: title,
+			active: true,
+		};
+		this.setState( prevState => ({
+			tasks: [...prevState.tasks, data],
+		}));
 	}
 
 	render() {
@@ -19,7 +32,7 @@ class App extends Component {
 
 		return (
 			<div className="mt-container">
-				<MTAddTodo />
+				<MTAddTodo submitTask={this.onTaskSubmit} />
 				<MTTodoList tasks={tasks} />
 			</div>
 		);
