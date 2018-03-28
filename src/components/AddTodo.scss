@@ -1,7 +1,13 @@
+// Import dependencies.
+@import './../modules/variables';
+@import './../modules/mixins';
+
+// AddTodo container.
 .mt-addtodo {
   text-align: center;
   margin-bottom: 30px;
 
+  // Header title.
   &__title {
     margin-top: 0;
     color: #384046;
@@ -9,29 +15,35 @@
     font-size: 1.9em;
   }
 
+  // Form.
   &__form {
     display: block;
 
+    // Form input.
     &__input {
+      // Reset input element appereance.
+      border: none;
+      border-bottom: 1px solid #eaeaea;
+      outline: none;
+
       font-size: 1.4em;
-        width: 100%;
-        border: none;
-        border-bottom: 1px solid #eaeaea;
-        outline: none;
-        padding: 10px;
-        color: #485056;
+      width: 100%;
+      padding: 10px;
+      color: $input-text-color;
       box-sizing: border-box;
       transition: all ease 0.3s;
       font-family: 'Source Sans Pro', sans-serif;
 
+      // Form input - focus.
       &:focus {
-        border-bottom: 2px solid #0fb9b1;
+        border-bottom: 2px solid $primary-color;
         padding-bottom: 9px;
       }
 
-        &::-webkit-input-placeholder {
-          color: #8e969c;
-        }
+      // Form input - placeholder.
+      &::-webkit-input-placeholder {
+        color: #8e969c;
+      }
     }
   }
 }

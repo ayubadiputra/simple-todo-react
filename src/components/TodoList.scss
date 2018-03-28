@@ -1,21 +1,28 @@
+// Import dependencies.
+@import './../modules/variables';
 @import './../modules/mixins';
 
+// TodoList container.
 .mt-todolist {
 
+  // TodoList items.
   &__list {
     list-style-type: none;
     padding-left: 0;
     margin-top: 30px;
   }
 
+  // TodoList filters.
   &__filters {
     text-align: right;
 
+    // Filter link.
     a {
       text-decoration: none;
       margin-left: 15px;
       color: #8e969c;
 
+      // Filter link active and on hover.
       &--active,
       &:hover {
         color: #0fb9b1;
@@ -23,5 +30,6 @@
     }
   }
 
-  @include list-page-active();
+  // Active filters links.
+  @include list-page-active( $pages );
 }

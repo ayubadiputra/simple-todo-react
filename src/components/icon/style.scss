@@ -1,7 +1,9 @@
+// Icon container.
 .mt-icon {
   display: inline-block;
   line-height: 0;
 
+  // SVG icon.
   svg {
     fill: currentColor;
   }
