@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import MTTodoItem from './TodoItem';
 import classNames from 'classnames';
-import styles from './TodoList.scss';
+import './TodoList.scss';
 
 class MTTodoList extends Component {
   constructor( props ) {
@@ -24,15 +24,20 @@ class MTTodoList extends Component {
     const active = [];
     const completed = [];
     let render = [];
+    const pageClass = 'mt-todolist__filters--' + page;
+    const activePage = classNames({
+      'mt-todolist__filters': true,
+      [pageClass]: true,
+    });
 
     tasks.forEach( task => {
       if ( task.active ) {
         active.push(
-          <MTTodoItem key={task.id} task={task} completeTask={this.props.completeTask} />
+          <MTTodoItem key={task.id} task={task} completeTask={this.props.completeTask} updateTask={this.props.updateTask} />
         );
       } else {
         completed.push(
-          <MTTodoItem key={task.id} task={task} completeTask={this.props.completeTask} />
+          <MTTodoItem key={task.id} task={task} completeTask={this.props.completeTask} updateTask={this.props.updateTask} />
         );
       }
     } );
@@ -50,7 +55,7 @@ class MTTodoList extends Component {
         <ul className="mt-todolist__list">
           { render }
         </ul>
-        <div className="mt-todolist__filters">
+        <div className={activePage}>
           <a id="all" href="#all" onClick={this.handlePage}>
             All
           </a>

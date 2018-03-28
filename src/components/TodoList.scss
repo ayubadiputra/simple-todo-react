@@ -1,3 +1,5 @@
+@import './../styles/mixins';
+
 .mt-todolist {
 
 	&__list {
@@ -20,4 +22,6 @@
 			}
 		}
 	}
+
+	@include list-page-active();
 }

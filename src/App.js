@@ -16,7 +16,8 @@ class App extends Component {
 			tasks: tasks,
 		};
 		this.onTaskSubmit = this.onTaskSubmit.bind( this );
-		this.onTaskComplete = this.onTaskComplete.bind( this );
+		this.onTaskCompleted = this.onTaskCompleted.bind( this );
+		this.onTaskUpdated = this.onTaskUpdated.bind( this );
 	}
 
 	onTaskSubmit( title ) {
@@ -30,7 +31,7 @@ class App extends Component {
 		}));
 	}
 
-	onTaskComplete( id, active ) {
+	onTaskCompleted( id, active ) {
 		let tasks = this.state.tasks;
 
 		// TODO: Need to find better way to fix this!!!
@@ -47,13 +48,30 @@ class App extends Component {
 		});
 	}
 
+	onTaskUpdated( id, title ) {
+		let tasks = this.state.tasks;
+
+		// TODO: Need to find better way to fix this!!!
+		mapKeys( tasks, (task, key) => {
+			if ( task.id == id ) {
+				task.title = title;
+				tasks[key] = task;
+				return false;
+			}
+		} );
+
+		this.setState({
+			tasks: tasks
+		});
+	}
+
 	render() {
 		const tasks = this.state.tasks;
 
 		return (
 			<div className="mt-container">
 				<MTAddTodo submitTask={this.onTaskSubmit} />
-				<MTTodoList tasks={tasks} completeTask={this.onTaskComplete} />
+				<MTTodoList tasks={tasks} completeTask={this.onTaskCompleted} updateTask={this.onTaskUpdated} />
 			</div>
 		);
 	}
