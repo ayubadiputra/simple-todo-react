@@ -14,7 +14,7 @@ class App extends Component {
 	constructor( props ) {
 		super( props );
 		this.state = {
-			tasks: tasks,
+			tasks,
 		};
 		this.onTaskSubmit = this.onTaskSubmit.bind( this );
 		this.onTaskCompleted = this.onTaskCompleted.bind( this );
@@ -46,7 +46,7 @@ class App extends Component {
 		} );
 
 		this.setState({
-			tasks: tasks
+			tasks,
 		});
 	}
 
@@ -63,7 +63,7 @@ class App extends Component {
 		} );
 
 		this.setState({
-			tasks: tasks
+			tasks
 		});
 	}
 
@@ -80,7 +80,7 @@ class App extends Component {
 		} );
 
 		this.setState({
-			tasks: tasks
+			tasks
 		});
 	}
 

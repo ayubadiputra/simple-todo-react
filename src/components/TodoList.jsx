@@ -7,14 +7,14 @@ class MTTodoList extends Component {
   constructor( props ) {
     super( props );
     this.state = {
-      page: 'all'
+      page: 'all',
     };
     this.handlePage = this.handlePage.bind( this );
   }
 
   handlePage(e) {
     this.setState({
-      page: e.target.id
+      page: e.target.id,
     });
   }
 

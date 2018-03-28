@@ -25,13 +25,13 @@ class MTTodoItem extends Component {
 
   handleEdit(e) {
     this.setState({
-      edit: ! this.state.edit
+      edit: ! this.state.edit,
     });
   }
 
   handleChange(e) {
     this.setState({
-      title: e.target.value
+      title: e.target.value,
     });
   }
 
@@ -45,14 +45,13 @@ class MTTodoItem extends Component {
     e.preventDefault();
     this.props.updateTask( this.id, this.state.title );
     this.setState({
-      edit: false
+      edit: false,
     });
     this.textInput.blur();
   }
 
   handleRemove(e) {
     e.preventDefault();
-    console.log( this.id )
     this.props.removeTask( this.id );
   }
 
@@ -94,7 +93,7 @@ class MTTodoItem extends Component {
           <form className={inputClass} onSubmit={this.handleUpdate}>
             <input
               value={this.state.title}
-              ref={ input => { this.textInput = input; } }
+              ref={ input => this.textInput = input }
               onFocus={this.handleFocus}
               onChange={this.handleChange}
             />
