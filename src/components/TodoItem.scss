@@ -2,27 +2,35 @@
 	position: relative;
 	font-size: 1.2em;
 	color: #485056;
-	padding: 15px 60px 15px 0;
+	padding-right: 60px;
 	display: flex;
 	align-items: center;
 
+	&--editable &__actions {
+		display: block;
+	}
+
 	&__checkbox,
-	&__input,
 	&__label {
 		position: relative;
 		display: inline-block;
 	}
 
 	&__label {
+		padding: 15px 0;
 
 		&--completed {
 			color: #8e969c;
 			text-decoration: line-through;
 		}
+
+		&--hide {
+	    	display: none;
+	    }
 	}
 
 	&__actions {
-		// display: none;
+		display: none;
 		position: absolute;
 		right: 0;
 		text-align: right;
@@ -33,13 +41,51 @@
 		}
 	}
 
+	&:hover &__actions {
+		display: block;
+	}
+
 	&__input {
 		display: none;
+		width: 100%;
+		position: relative;
+
+		input {
+			font-size: 1em;
+		    width: 100%;
+		    border: none;
+		    outline: none;
+		    color: #485056;
+			box-sizing: border-box;
+			transition: all ease 0.3s;
+			font-family: 'Source Sans Pro', sans-serif;
+			padding: 15px 0 13px;
+			border-bottom: 2px solid #0fb9b1;
+
+		    &::-webkit-input-placeholder {
+		    	color: #8e969c;
+		    }
+		}
+
+		&__save {
+			cursor: pointer;
+			position: absolute;
+			border: none;
+			outline: none;
+			background: transparent;
+			line-height: 0;
+			top: 16px;
+			right: -30px;
+			padding: 0;
+		}
+
+		&--show {
+	    	display: inline-block;
+	    }
 	}
 
 	/* The container */
 	&__checkbox {
-	    display: inline-block;
 	    position: relative;
 	    cursor: pointer;
 	    -webkit-user-select: none;
