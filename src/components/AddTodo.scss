@@ -1,37 +1,37 @@
 .mt-addtodo {
-	text-align: center;
-	margin-bottom: 30px;
+  text-align: center;
+  margin-bottom: 30px;
 
-	&__title {
-		margin-top: 0;
-		color: #384046;
-		font-weight: 400;
-		font-size: 1.9em;
-	}
+  &__title {
+    margin-top: 0;
+    color: #384046;
+    font-weight: 400;
+    font-size: 1.9em;
+  }
 
-	&__form {
-		display: block;
+  &__form {
+    display: block;
 
-		&__input {
-			font-size: 1.4em;
-		    width: 100%;
-		    border: none;
-		    border-bottom: 1px solid #eaeaea;
-		    outline: none;
-		    padding: 10px;
-		    color: #485056;
-			box-sizing: border-box;
-			transition: all ease 0.3s;
-			font-family: 'Source Sans Pro', sans-serif;
+    &__input {
+      font-size: 1.4em;
+        width: 100%;
+        border: none;
+        border-bottom: 1px solid #eaeaea;
+        outline: none;
+        padding: 10px;
+        color: #485056;
+      box-sizing: border-box;
+      transition: all ease 0.3s;
+      font-family: 'Source Sans Pro', sans-serif;
 
-			&:focus {
-				border-bottom: 2px solid #0fb9b1;
-				padding-bottom: 9px;
-			}
+      &:focus {
+        border-bottom: 2px solid #0fb9b1;
+        padding-bottom: 9px;
+      }
 
-		    &::-webkit-input-placeholder {
-		    	color: #8e969c;
-		    }
-		}
-	}
+        &::-webkit-input-placeholder {
+          color: #8e969c;
+        }
+    }
+  }
 }

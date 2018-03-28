@@ -1,14 +1,14 @@
 @mixin list-page-active {
 
-	$pages: all active completed;
+  $pages: all active completed;
 
-  	@each $page in $pages {
-	    .mt-todolist__filters--#{$page} ##{$page} {
-	        color: rgba(43, 203, 186, 0.6);
+    @each $page in $pages {
+      .mt-todolist__filters--#{$page} ##{$page} {
+          color: rgba(43, 203, 186, 0.6);
 
-			&:hover {
-				color: rgba(43, 203, 186, 1);
-			}
-	    }
-  	}
+      &:hover {
+        color: rgba(43, 203, 186, 1);
+      }
+      }
+    }
 }

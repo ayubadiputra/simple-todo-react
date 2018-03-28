@@ -1,17 +1,17 @@
 [
-	{
-		"id": 1,
-		"title": "Create basic mockup",
-		"active": false
-	},
-	{
-		"id": 2,
-		"title": "Break the UI into components hierarchy to see how it works",
-		"active": true
-	},
-	{
-		"id": 3,
-		"title": "Build static version",
-		"active": true
-	}
+  {
+    "id": 1,
+    "title": "Create basic mockup",
+    "active": false
+  },
+  {
+    "id": 2,
+    "title": "Break the UI into components hierarchy to see how it works",
+    "active": true
+  },
+  {
+    "id": 3,
+    "title": "Build static version",
+    "active": true
+  }
 ]

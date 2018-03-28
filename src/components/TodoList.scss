@@ -2,26 +2,26 @@
 
 .mt-todolist {
 
-	&__list {
-		list-style-type: none;
-		padding-left: 0;
-		margin-top: 30px;
-	}
+  &__list {
+    list-style-type: none;
+    padding-left: 0;
+    margin-top: 30px;
+  }
 
-	&__filters {
-		text-align: right;
+  &__filters {
+    text-align: right;
 
-		a {
-			text-decoration: none;
-			margin-left: 15px;
-			color: #8e969c;
+    a {
+      text-decoration: none;
+      margin-left: 15px;
+      color: #8e969c;
 
-			&--active,
-			&:hover {
-				color: #0fb9b1;
-			}
-		}
-	}
+      &--active,
+      &:hover {
+        color: #0fb9b1;
+      }
+    }
+  }
 
-	@include list-page-active();
+  @include list-page-active();
 }
