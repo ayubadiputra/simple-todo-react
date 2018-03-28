@@ -4,6 +4,7 @@ import MTTodoList from './components/TodoList';
 import uniqid from 'uniqid';
 import mapKeys from 'lodash/mapKeys';
 import isEmpty from 'lodash/isEmpty';
+import has from 'lodash/has';
 import './App.scss';
 
 // Dummy data for demo.
@@ -18,6 +19,7 @@ class App extends Component {
 		this.onTaskSubmit = this.onTaskSubmit.bind( this );
 		this.onTaskCompleted = this.onTaskCompleted.bind( this );
 		this.onTaskUpdated = this.onTaskUpdated.bind( this );
+		this.onTaskRemoved = this.onTaskRemoved.bind( this );
 	}
 
 	onTaskSubmit( title ) {
@@ -65,13 +67,30 @@ class App extends Component {
 		});
 	}
 
+	onTaskRemoved( id ) {
+		let tasks = this.state.tasks;
+
+		// TODO: Need to find better way to fix this!!!
+		// INSPECT: Not sure why, the loop called twice!!!
+		mapKeys( tasks, (task, key) => {
+			if ( has( task, 'id' ) && task.id == id ) {
+				tasks.splice( key, 1 );
+				return false;
+			}
+		} );
+
+		this.setState({
+			tasks: tasks
+		});
+	}
+
 	render() {
 		const tasks = this.state.tasks;
 
 		return (
 			<div className="mt-container">
 				<MTAddTodo submitTask={this.onTaskSubmit} />
-				<MTTodoList tasks={tasks} completeTask={this.onTaskCompleted} updateTask={this.onTaskUpdated} />
+				<MTTodoList tasks={tasks} completeTask={this.onTaskCompleted} updateTask={this.onTaskUpdated} removeTask={this.onTaskRemoved} />
 			</div>
 		);
 	}

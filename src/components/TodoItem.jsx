@@ -16,6 +16,7 @@ class MTTodoItem extends Component {
     this.handleChange = this.handleChange.bind( this );
     this.handleUpdate = this.handleUpdate.bind( this );
     this.handleFocus = this.handleFocus.bind( this );
+    this.handleRemove = this.handleRemove.bind( this );
   }
 
   handleComplete(e) {
@@ -47,6 +48,12 @@ class MTTodoItem extends Component {
       edit: false
     });
     this.textInput.blur();
+  }
+
+  handleRemove(e) {
+    e.preventDefault();
+    console.log( this.id )
+    this.props.removeTask( this.id );
   }
 
   componentDidUpdate() {
@@ -103,7 +110,7 @@ class MTTodoItem extends Component {
               <Icon name="edit" color="#00b894" />
             </a>
           }
-          <a href="#" className="mt-todoitem__actions__remove">
+          <a href="#" className="mt-todoitem__actions__remove" onClick={this.handleRemove}>
             <Icon name="trash" color="#d63031" />
           </a>
         </div>

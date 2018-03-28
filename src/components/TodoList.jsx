@@ -33,11 +33,11 @@ class MTTodoList extends Component {
     tasks.forEach( task => {
       if ( task.active ) {
         active.push(
-          <MTTodoItem key={task.id} task={task} completeTask={this.props.completeTask} updateTask={this.props.updateTask} />
+          <MTTodoItem key={task.id} task={task} completeTask={this.props.completeTask} updateTask={this.props.updateTask} removeTask={this.props.removeTask} />
         );
       } else {
         completed.push(
-          <MTTodoItem key={task.id} task={task} completeTask={this.props.completeTask} updateTask={this.props.updateTask} />
+          <MTTodoItem key={task.id} task={task} completeTask={this.props.completeTask} updateTask={this.props.updateTask} removeTask={this.props.removeTask} />
         );
       }
     } );
