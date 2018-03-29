@@ -2,8 +2,9 @@
  * Import dependencies.
  */
 import React, { Component } from 'react';
-import MTTodoItem from './TodoItem';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import MTTodoItem from './TodoItem';
 import './TodoList.scss';
 
 /**
@@ -46,6 +47,18 @@ class MTTodoList extends Component {
   }
 
   /**
+   * Get task item complete with the props.
+   *
+   * @param  {object} task Current object task.
+   * @return {string}      HTML tag for the task item.
+   */
+  getItem( task ) {
+    return (
+      <MTTodoItem key={task.id} task={task} completeTask={this.props.completeTask} updateTask={this.props.updateTask} removeTask={this.props.removeTask} />
+    );
+  }
+
+  /**
    * Render TodoList to display tasks list.
    *
    * @return {string} TodoList HTML tags.
@@ -70,13 +83,9 @@ class MTTodoList extends Component {
     // Grouping all the tasks based on the status.
     tasks.forEach( task => {
       if ( task.active ) {
-        active.push(
-          <MTTodoItem key={task.id} task={task} completeTask={this.props.completeTask} updateTask={this.props.updateTask} removeTask={this.props.removeTask} />
-        );
+        active.push( this.getItem( task ) );
       } else {
-        completed.push(
-          <MTTodoItem key={task.id} task={task} completeTask={this.props.completeTask} updateTask={this.props.updateTask} removeTask={this.props.removeTask} />
-        );
+        completed.push( this.getItem( task ) );
       }
     } );
 
@@ -102,6 +111,18 @@ class MTTodoList extends Component {
       </div>
     );
   }
+}
+
+/**
+ * Validate props data type.
+ *
+ * @type {Object}
+ */
+MTTodoList.propTypes = {
+  tasks: PropTypes.array.isRequired,
+  completeTask: PropTypes.func.isRequired,
+  updateTask: PropTypes.func.isRequired,
+  removeTask: PropTypes.func.isRequired,
 }
 
 export default MTTodoList;

@@ -2,6 +2,7 @@
  * Import dependencies.
  */
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import MTAddTodo from './components/AddTodo';
 import MTTodoList from './components/TodoList';
 import './App.scss';

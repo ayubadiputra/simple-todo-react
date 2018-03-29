@@ -2,6 +2,8 @@
  * Import dependencies.
  */
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import ExtraPropTypes from 'react-extra-prop-types';
 import './style.scss';
 
 /**
@@ -68,6 +70,17 @@ class MTIcon extends Component {
       </div>
     );
   }
+}
+
+/**
+ * Validate props data type.
+ *
+ * @type {Object}
+ */
+MTIcon.propTypes = {
+  size: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  color: ExtraPropTypes.color.isRequired,
 }
 
 export default MTIcon;

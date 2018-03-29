@@ -2,6 +2,7 @@
  * Import dependencies.
  */
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './AddTodo.scss';
 
 /**
@@ -76,6 +77,15 @@ class MTAddTodo extends Component {
       </div>
     );
   }
+}
+
+/**
+ * Validate props data type.
+ *
+ * @type {Object}
+ */
+MTAddTodo.propTypes = {
+  submitTask: PropTypes.func.isRequired,
 }
 
 export default MTAddTodo;

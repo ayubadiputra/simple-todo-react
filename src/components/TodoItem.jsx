@@ -3,6 +3,7 @@
  */
 import React, { Component } from 'react';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import Icon from './icon';
 import './TodoItem.scss';
 
@@ -22,14 +23,16 @@ class MTTodoItem extends Component {
   constructor( props ) {
     super( props );
 
+    const task = this.props.task;
+
     // Initiate states.
     this.state = {
       edit: false,
-      title: this.props.task.title,
+      title: task.title,
     };
 
     // Add class property.
-    this.id = this.props.task.id;
+    this.id = task.id;
 
     // Complete task event handler.
     this.handleComplete = this.handleComplete.bind( this );
@@ -168,23 +171,35 @@ class MTTodoItem extends Component {
           />
 
           <button type="submit" className="mt-todoitem__input__save">
-            <Icon name="save" color="#3498db" size="20"/>
+            <Icon name="save" color="#3498db" size={20}/>
           </button>
         </form> }
 
         <div className="mt-todoitem__actions">
           { ! editable &&
           <a href="#" className="mt-todoitem__actions__edit" onClick={this.handleEdit}>
-            <Icon name="edit" color="#00b894" size="20"/>
+            <Icon name="edit" color="#00b894" size={20}/>
           </a> }
 
           <a href="#" className="mt-todoitem__actions__remove" onClick={this.handleRemove}>
-            <Icon name="trash" color="#d63031" size="20" />
+            <Icon name="trash" color="#d63031" size={20} />
           </a>
         </div>
       </li>
     );
   }
+}
+
+/**
+ * Validate props data type.
+ *
+ * @type {Object}
+ */
+MTTodoItem.propTypes = {
+  task: PropTypes.object.isRequired,
+  completeTask: PropTypes.func.isRequired,
+  updateTask: PropTypes.func.isRequired,
+  removeTask: PropTypes.func.isRequired,
 }
 
 export default MTTodoItem;
