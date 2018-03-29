@@ -73,29 +73,7 @@ class App extends Component {
    * @param {boolean} active Task status.
    */
   onTaskCompleted( id, active ) {
-    let tasks = this.state.tasks;
-
-    /**
-     * Update task status recursively.
-     *
-     * @todo Need to find better way to fix this!!!
-     * - TODO:  Don't run looping just to update the value, imagine we have 1000 tasks!
-     * - FIXED: Not working with shouldComponentUpdate because the task object is
-     *          mutated. It's fixed by applying spread variable to update task status.
-     */
-    mapKeys( tasks, ( task, key ) => {
-      // Find the task ID.
-      if ( task.id == id ) {
-        // Update the task status.
-        task = {...task, active: ! active};
-        tasks[key] = task;
-      }
-    } );
-
-    // Update existing tasks.
-    this.setState({
-      tasks,
-    });
+    this.updateSingleTaskProperty( id, 'active', ! active );
   }
 
   /**
@@ -105,29 +83,7 @@ class App extends Component {
    * @param {boolean} title Task title.
    */
   onTaskUpdated( id, title ) {
-    let tasks = this.state.tasks;
-
-    /**
-     * Update task title recursively.
-     *
-     * @todo Need to find better way to fix this!!!
-     * - TODO:  Don't run looping just to update the value, imagine we have 1000 tasks!
-     * - FIXED: Not working with shouldComponentUpdate because the task object is
-     *          mutated. It's fixed by applying spread variable to update task title.
-     */
-    mapKeys( tasks, ( task, key ) => {
-      // Find the task ID.
-      if ( task.id == id ) {
-        // Update the task title.
-        task = {...task, title: title};
-        tasks[key] = task;
-      }
-    } );
-
-    // Update existing tasks.
-    this.setState({
-      tasks,
-    });
+    this.updateSingleTaskProperty( id, 'title', title );
   }
 
   /**
@@ -147,10 +103,44 @@ class App extends Component {
      *          mutated. It's fixed by applying spread variable to update task title.
      */
     mapKeys( tasks, ( task, key ) => {
+      console.log('Delete')
       // Find the task ID.
       if ( has( task, 'id' ) && task.id == id ) {
          // Remove the task.
         tasks.splice( key, 1 );
+      }
+    } );
+
+    // Update existing tasks.
+    this.setState({
+      tasks,
+    });
+  }
+
+  /**
+   * Update single task property.
+   *
+   * @param  {string} id        Task ID.
+   * @param  {string} taskKey   Task property.
+   * @param  {mixed}  taskValue New task property value
+   */
+  updateSingleTaskProperty( id, taskKey, taskValue ) {
+    let tasks = this.state.tasks;
+
+    /**
+     * Update task property by checking the items recursively.
+     *
+     * @todo Need to find better way to fix this!!!
+     * - TODO:  Don't run looping just to update the value, imagine we have 1000 tasks!
+     * - FIXED: Not working with shouldComponentUpdate because the task object is
+     *          mutated. It's fixed by applying spread variable to update task status.
+     */
+    mapKeys( tasks, ( task, key ) => {
+      // Find the task ID.
+      if ( task.id == id ) {
+        // Update the task status.
+        task = {...task, [taskKey]: taskValue};
+        tasks[key] = task;
       }
     } );
 
