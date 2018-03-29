@@ -12,9 +12,6 @@ Simple manage your todo today by adding your current tasks in the list. Mark you
 
 ### Issues
 - Doesn't support Ajax yet
-- Not optimized yet, still render all components
-- Updating states are not optimized yet
-- There is no PropTypes
 - The UI needs improvement
 
 ### Incoming Features
@@ -27,3 +24,9 @@ Simple manage your todo today by adding your current tasks in the list. Mark you
 
 ### Tools Used
 - [Create React App](https://github.com/facebook/create-react-app)
+
+### FIXED Issues
+#### 0.0.1
+- FIXED ~Not optimized yet, still render all components~ Most of the components already use `shouldComponentUpdate`.
+- FIXED ~Updating states are not optimized yet~ Avoid mutating object for updating the states (not all states actually) to fix an issue with current and next state arguments in `shouldComponentUpdate`.
+- FIXED ~There is no PropTypes~
