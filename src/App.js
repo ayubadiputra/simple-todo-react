@@ -61,9 +61,9 @@ class App extends Component {
     };
 
     // Add new task to the list (appending not mutating).
-    this.setState( prevState => ({
-      tasks: [...prevState.tasks, data],
-    }));
+    this.setState({
+      tasks: [...this.state.tasks, data],
+    });
   }
 
   /**
@@ -92,7 +92,7 @@ class App extends Component {
       }
     } );
 
-    // Mutate existing tasks.
+    // Update existing tasks.
     this.setState({
       tasks,
     });
@@ -107,19 +107,26 @@ class App extends Component {
   onTaskUpdated( id, title ) {
     let tasks = this.state.tasks;
 
-    // TODO: Need to find better way to fix this!!!
+    /**
+     * Update task title recursively.
+     *
+     * @todo Need to find better way to fix this!!!
+     * - TODO:  Don't run looping just to update the value, imagine we have 1000 tasks!
+     * - FIXED: Not working with shouldComponentUpdate because the task object is
+     *          mutated. It's fixed by applying spread variable to update task title.
+     */
     mapKeys( tasks, ( task, key ) => {
       // Find the task ID.
       if ( task.id == id ) {
         // Update the task title.
-        task.title = title;
+        task = {...task, title: title};
         tasks[key] = task;
       }
     } );
 
-    // Mutate existing tasks.
+    // Update existing tasks.
     this.setState({
-      tasks
+      tasks,
     });
   }
 
@@ -131,8 +138,14 @@ class App extends Component {
   onTaskRemoved( id ) {
     let tasks = this.state.tasks;
 
-    // TODO: Need to find better way to fix this!!!
-    // INSPECT: Not sure why, the loop called twice!!!
+    /**
+     * Remove task recursively.
+     *
+     * @todo Need to find better way to fix this!!!
+     * - TODO:  Don't run looping just to remove a task, imagine we have 1000 tasks!
+     * - FIXED: Not working with shouldComponentUpdate because the task object is
+     *          mutated. It's fixed by applying spread variable to update task title.
+     */
     mapKeys( tasks, ( task, key ) => {
       // Find the task ID.
       if ( has( task, 'id' ) && task.id == id ) {
@@ -141,9 +154,9 @@ class App extends Component {
       }
     } );
 
-    // Mutate existing tasks.
+    // Update existing tasks.
     this.setState({
-      tasks
+      tasks,
     });
   }
 

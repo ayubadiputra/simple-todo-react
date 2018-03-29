@@ -10,9 +10,6 @@ import './style.scss';
  * Icon component.
  *
  * Render icon component with following attributes:
- * - icon name
- * - color
- * - size
  *
  * @since 0.0.1
  */
@@ -20,9 +17,9 @@ class MTIcon extends Component {
   /**
    * Hooks shouldComponentUpdate.
    *
-   * Right now, MTIcon is dummy component. It doesn't need any rerendering component.
-   * Once it's created, all the properties won't be changed. Consider to set any effect
-   * or animation via CSS only. For example: hover or focus effect.
+   * Right now, MTIcon is dummy component. It doesn't need any rerendering process.
+   * Once it's created, all the properties won't be changed. Consider to play any
+   * effect or animation via CSS only. For example: hover or focus effect.
    *
    * @return {boolean} Return false if component doesn't need rerendering.
    */
@@ -39,7 +36,6 @@ class MTIcon extends Component {
   getIcon( name ) {
 
     // Check icon name.
-    // TODO: PROPTYPES -> Ensure icon name is string.
     switch( name ) {
 
       case 'edit':

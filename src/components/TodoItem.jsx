@@ -133,7 +133,7 @@ class MTTodoItem extends Component {
   handleUpdate(e) {
     e.preventDefault();
 
-    // Lift up task ID and active status to completeTask().
+    // Lift up task ID and active status to updateTask().
     this.props.updateTask( this.id, this.state.title );
 
     // Set edit state as false to close the input.
