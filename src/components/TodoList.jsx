@@ -90,9 +90,9 @@ class MTTodoList extends Component {
     } );
 
     // Filters the tasks based on the status and save it in render.
-    if ( page == 'all' ) {
+    if ( page === 'all' ) {
       render = active.concat( completed );
-    } else if ( page == 'active' ) {
+    } else if ( page === 'active' ) {
       render = active;
     } else {
       render = completed;

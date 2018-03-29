@@ -37,7 +37,14 @@
     text-align: right;
     line-height: 0;
 
-    a {
+    button {
+      // Reset button element appereance.
+      cursor: pointer;
+      border: none;
+      outline: none;
+      background: transparent;
+      padding: 0;
+
       margin-left: 10px;
     }
   }

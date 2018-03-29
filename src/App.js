@@ -2,7 +2,6 @@
  * Import dependencies.
  */
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import MTAddTodo from './components/AddTodo';
 import MTTodoList from './components/TodoList';
 import './App.scss';
@@ -105,7 +104,7 @@ class App extends Component {
     mapKeys( tasks, ( task, key ) => {
       console.log('Delete')
       // Find the task ID.
-      if ( has( task, 'id' ) && task.id == id ) {
+      if ( has( task, 'id' ) && task.id === id ) {
          // Remove the task.
         tasks.splice( key, 1 );
       }
@@ -137,7 +136,7 @@ class App extends Component {
      */
     mapKeys( tasks, ( task, key ) => {
       // Find the task ID.
-      if ( task.id == id ) {
+      if ( task.id === id ) {
         // Update the task status.
         task = {...task, [taskKey]: taskValue};
         tasks[key] = task;

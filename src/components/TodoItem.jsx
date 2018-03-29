@@ -208,13 +208,13 @@ class MTTodoItem extends Component {
 
         <div className="mt-todoitem__actions">
           { ! editable &&
-          <a href="#" className="mt-todoitem__actions__edit" onClick={this.handleEdit}>
+          <button className="mt-todoitem__actions__edit" onClick={this.handleEdit}>
             <Icon name="edit" color="#00b894" size={20}/>
-          </a> }
+          </button> }
 
-          <a href="#" className="mt-todoitem__actions__remove" onClick={this.handleRemove}>
+          <button className="mt-todoitem__actions__remove" onClick={this.handleRemove}>
             <Icon name="trash" color="#d63031" size={20} />
-          </a>
+          </button>
         </div>
       </li>
     );
