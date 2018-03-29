@@ -18,6 +18,19 @@ import './style.scss';
  */
 class MTIcon extends Component {
   /**
+   * Hooks shouldComponentUpdate.
+   *
+   * Right now, MTIcon is dummy component. It doesn't need any rerendering component.
+   * Once it's created, all the properties won't be changed. Consider to set any effect
+   * or animation via CSS only. For example: hover or focus effect.
+   *
+   * @return {boolean} Return false if component doesn't need rerendering.
+   */
+  shouldComponentUpdate( nextProps ) {
+    return false;
+  }
+
+  /**
    * Get SVG icon based on the icon name.
    *
    * @param  {string} name Icon name.

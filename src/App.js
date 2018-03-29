@@ -75,12 +75,19 @@ class App extends Component {
   onTaskCompleted( id, active ) {
     let tasks = this.state.tasks;
 
-    // TODO: Need to find better way to fix this!!!
+    /**
+     * Update task status recursively.
+     *
+     * @todo Need to find better way to fix this!!!
+     * - TODO:  Don't run looping just to update the value, imagine we have 1000 tasks!
+     * - FIXED: Not working with shouldComponentUpdate because the task object is
+     *          mutated. It's fixed by applying spread variable to update task status.
+     */
     mapKeys( tasks, ( task, key ) => {
       // Find the task ID.
       if ( task.id == id ) {
         // Update the task status.
-        task.active = ! active;
+        task = {...task, active: ! active};
         tasks[key] = task;
       }
     } );

@@ -8,6 +8,11 @@ import Icon from './icon';
 import './TodoItem.scss';
 
 /**
+ * Import utilities.
+ */
+import isEqual from 'lodash/isEqual';
+
+/**
  * TodoItem component.
  *
  * Render container task item.
@@ -45,6 +50,32 @@ class MTTodoItem extends Component {
 
     // Remove task event handler.
     this.handleRemove = this.handleRemove.bind( this );
+  }
+
+  /**
+   * Hooks shouldComponentUpdate.
+   *
+   * Avoid unnecessary rerendering component.
+   *
+   * @return {boolean} Return false if component doesn't need rerendering.
+   */
+  shouldComponentUpdate( nextProps, nextState ) {
+    // When user click on update icon.
+    if ( this.state.edit !== nextState.edit ) {
+      return true;
+    }
+
+    // When user is writing on the task title input.
+    if ( this.state.title !== nextState.title ) {
+      return true;
+    }
+
+    // When tasks list is updated because current task was completed.
+    if ( ! isEqual( this.props.task, nextProps.task ) ) {
+      return true;
+    }
+
+    return false;
   }
 
   /**

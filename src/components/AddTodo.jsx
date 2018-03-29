@@ -32,6 +32,22 @@ class MTAddTodo extends Component {
   }
 
   /**
+   * Hooks shouldComponentUpdate.
+   *
+   * Avoid unnecessary rerendering component.
+   *
+   * @return {boolean} Return false if component doesn't need rerendering.
+   */
+  shouldComponentUpdate( nextProps, nextState ) {
+    // When user is writing the task title.
+    if ( this.state.title !== nextState.title ) {
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
    * Handle change event.
    *
    * @param {object} e Current target element.

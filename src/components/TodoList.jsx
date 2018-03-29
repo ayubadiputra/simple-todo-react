@@ -101,7 +101,7 @@ class MTTodoList extends Component {
     return (
       <div className="mt-todolist">
         <ul className="mt-todolist__list">
-          { render }
+          {render}
         </ul>
         <div className={activePage}>
           <a id="all" href="#all" onClick={this.handlePage}>All</a>
