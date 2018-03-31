@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import Icon from './icon';
+import MTActions from './../actions';
 import './TodoItem.scss';
 
 /**
@@ -84,8 +85,9 @@ class MTTodoItem extends Component {
    * @param {object} e Current target element.
    */
   handleComplete(e) {
+    MTActions.completeTask({ id: this.id, active: ! e.target.checked });
     // Lift up task ID and active status to completeTask().
-    this.props.completeTask( this.id, e.target.checked );
+    // this.props.completeTask( this.id, e.target.checked );
   }
 
   /**
@@ -133,8 +135,10 @@ class MTTodoItem extends Component {
   handleUpdate(e) {
     e.preventDefault();
 
+    MTActions.updateTask({ id: this.id, title: this.state.title });
+
     // Lift up task ID and active status to updateTask().
-    this.props.updateTask( this.id, this.state.title );
+    // this.props.updateTask( this.id, this.state.title );
 
     // Set edit state as false to close the input.
     this.setState({
@@ -150,8 +154,9 @@ class MTTodoItem extends Component {
   handleRemove(e) {
     e.preventDefault();
 
+    MTActions.removeTask( this.id );
     // Lift up task ID to removeTask().
-    this.props.removeTask( this.id );
+    // this.props.removeTask( this.id );
   }
 
   /**

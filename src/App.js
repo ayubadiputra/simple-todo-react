@@ -14,12 +14,6 @@ import {
 import './App.scss';
 
 /**
- * Import utilities.
- */
-import mapKeys from 'lodash/mapKeys';
-import has from 'lodash/has';
-
-/**
  * Import dummy data for demo.
  */
 import tasks from './tasks.json';
@@ -48,18 +42,23 @@ class App extends Component {
     // Events handler.
     this.onTasksUpdated = this.onTasksUpdated.bind( this );
 
-    this.onTaskCompleted = this.onTaskCompleted.bind( this );
-    this.onTaskUpdated = this.onTaskUpdated.bind( this );
-    this.onTaskRemoved = this.onTaskRemoved.bind( this );
+    // this.onTaskCompleted = this.onTaskCompleted.bind( this );
+    // this.onTaskUpdated = this.onTaskUpdated.bind( this );
+    // this.onTaskRemoved = this.onTaskRemoved.bind( this );
   }
 
   componentDidMount() {
     MTStore.addChangeListener( SUBMIT_TASK, this.onTasksUpdated );
-    // MTStore.addChangeListener( 'STORE_REMOVE_ARTICLE', this.onRemove );
+    MTStore.addChangeListener( COMPLETE_TASK, this.onTasksUpdated );
+    MTStore.addChangeListener( UPDATE_TASK, this.onTasksUpdated );
+    MTStore.addChangeListener( REMOVE_TASK, this.onTasksUpdated );
   }
 
   componentWillUnmount() {
-    MTStore.removeChangeListener( SUBMIT_TASK, this.onTasksUpdated )
+    MTStore.removeChangeListener( SUBMIT_TASK, this.onTasksUpdated );
+    MTStore.removeChangeListener( COMPLETE_TASK, this.onTasksUpdated );
+    MTStore.removeChangeListener( UPDATE_TASK, this.onTasksUpdated );
+    MTStore.removeChangeListener( REMOVE_TASK, this.onTasksUpdated );
   }
 
   /**
@@ -81,9 +80,9 @@ class App extends Component {
    * @param {string}  id     Task ID.
    * @param {boolean} active Task status.
    */
-  onTaskCompleted( id, active ) {
-    this.updateSingleTaskProperty( id, 'active', ! active );
-  }
+  // onTaskCompleted( id, active ) {
+    // this.updateSingleTaskProperty( id, 'active', ! active );
+  // }
 
   /**
    * Update task title based on the task ID.
@@ -91,17 +90,17 @@ class App extends Component {
    * @param {string}  id    Task ID.
    * @param {boolean} title Task title.
    */
-  onTaskUpdated( id, title ) {
-    this.updateSingleTaskProperty( id, 'title', title );
-  }
+  // onTaskUpdated( id, title ) {
+  //   this.updateSingleTaskProperty( id, 'title', title );
+  // }
 
   /**
    * Remove task from the list based on the task ID.
    *
    * @param {string} id Task ID.
    */
-  onTaskRemoved( id ) {
-    let tasks = this.state.tasks;
+  // onTaskRemoved( id ) {
+  //   let tasks = this.state.tasks;
 
     /**
      * Remove task recursively.
@@ -111,20 +110,20 @@ class App extends Component {
      * - FIXED: Not working with shouldComponentUpdate because the task object is
      *          mutated. It's fixed by applying spread variable to update task title.
      */
-    mapKeys( tasks, ( task, key ) => {
-      console.log('Delete')
-      // Find the task ID.
-      if ( has( task, 'id' ) && task.id === id ) {
-         // Remove the task.
-        tasks.splice( key, 1 );
-      }
-    } );
+    // mapKeys( tasks, ( task, key ) => {
+    //   console.log('Delete')
+    //   // Find the task ID.
+    //   if ( has( task, 'id' ) && task.id === id ) {
+    //      // Remove the task.
+    //     tasks.splice( key, 1 );
+    //   }
+    // } );
 
     // Update existing tasks.
-    this.setState({
-      tasks,
-    });
-  }
+  //   this.setState({
+  //     tasks,
+  //   });
+  // }
 
   /**
    * Update single task property.
@@ -133,8 +132,8 @@ class App extends Component {
    * @param  {string} taskKey   Task property.
    * @param  {mixed}  taskValue New task property value
    */
-  updateSingleTaskProperty( id, taskKey, taskValue ) {
-    let tasks = this.state.tasks;
+  // updateSingleTaskProperty( id, taskKey, taskValue ) {
+  //   let tasks = this.state.tasks;
 
     /**
      * Update task property by checking the items recursively.
@@ -144,20 +143,20 @@ class App extends Component {
      * - FIXED: Not working with shouldComponentUpdate because the task object is
      *          mutated. It's fixed by applying spread variable to update task status.
      */
-    mapKeys( tasks, ( task, key ) => {
-      // Find the task ID.
-      if ( task.id === id ) {
-        // Update the task status.
-        task = {...task, [taskKey]: taskValue};
-        tasks[key] = task;
-      }
-    } );
+    // mapKeys( tasks, ( task, key ) => {
+    //   // Find the task ID.
+    //   if ( task.id === id ) {
+    //     // Update the task status.
+    //     task = {...task, [taskKey]: taskValue};
+    //     tasks[key] = task;
+    //   }
+    // } );
 
     // Update existing tasks.
-    this.setState({
-      tasks,
-    });
-  }
+  //   this.setState({
+  //     tasks,
+  //   });
+  // }
 
   /**
    * Render TodoList to display tasks list.

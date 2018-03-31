@@ -1,7 +1,7 @@
 /**
  * Import dependencies.
  */
-import MTDispatcher from './../MTDispatcher';
+import MTDispatcher from './../dispatcher';
 import {
   SUBMIT_TASK,
   COMPLETE_TASK,
@@ -17,24 +17,24 @@ class MTActions {
     });
   }
 
-  completeTask( status ) {
+  completeTask( data ) {
     MTDispatcher.dispatch({
       type: COMPLETE_TASK,
-      value: status,
+      data: data,
     });
   }
 
   updateTask( data ) {
     MTDispatcher.dispatch({
       type: UPDATE_TASK,
-      value: data,
+      data: data,
     });
   }
 
   removeTask( id ) {
     MTDispatcher.dispatch({
       type: REMOVE_TASK,
-      value: id,
+      id: id,
     });
   }
 }
