@@ -4,12 +4,18 @@
 import React, { Component } from 'react';
 import MTAddTodo from './components/AddTodo';
 import MTTodoList from './components/TodoList';
+import MTStore from './stores';
+import {
+  SUBMIT_TASK,
+  COMPLETE_TASK,
+  UPDATE_TASK,
+  REMOVE_TASK,
+} from './constants';
 import './App.scss';
 
 /**
  * Import utilities.
  */
-import uniqid from 'uniqid';
 import mapKeys from 'lodash/mapKeys';
 import has from 'lodash/has';
 
@@ -40,10 +46,20 @@ class App extends Component {
     };
 
     // Events handler.
-    this.onTaskSubmit = this.onTaskSubmit.bind( this );
+    this.onTasksUpdated = this.onTasksUpdated.bind( this );
+
     this.onTaskCompleted = this.onTaskCompleted.bind( this );
     this.onTaskUpdated = this.onTaskUpdated.bind( this );
     this.onTaskRemoved = this.onTaskRemoved.bind( this );
+  }
+
+  componentDidMount() {
+    MTStore.addChangeListener( SUBMIT_TASK, this.onTasksUpdated );
+    // MTStore.addChangeListener( 'STORE_REMOVE_ARTICLE', this.onRemove );
+  }
+
+  componentWillUnmount() {
+    MTStore.removeChangeListener( SUBMIT_TASK, this.onTasksUpdated )
   }
 
   /**
@@ -51,17 +67,11 @@ class App extends Component {
    *
    * @param {string} title New task title.
    */
-  onTaskSubmit( title ) {
-    // Initiate the object data.
-    const data = {
-      id: uniqid(),
-      title: title,
-      active: true,
-    };
-
+  onTasksUpdated() {
     // Add new task to the list (appending not mutating).
     this.setState({
-      tasks: [...this.state.tasks, data],
+      tasks: MTStore.getAll(),
+      // tasks: [...this.state.tasks, data],
     });
   }
 
@@ -159,7 +169,7 @@ class App extends Component {
 
     return (
       <div className="mt-container">
-        <MTAddTodo submitTask={this.onTaskSubmit} />
+        <MTAddTodo />
         <MTTodoList tasks={tasks} completeTask={this.onTaskCompleted} updateTask={this.onTaskUpdated} removeTask={this.onTaskRemoved} />
       </div>
     );

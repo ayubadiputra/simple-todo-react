@@ -3,6 +3,7 @@
  */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import MTActions from './../actions';
 import './AddTodo.scss';
 
 /**
@@ -67,8 +68,11 @@ class MTAddTodo extends Component {
   handleSubmit(e) {
     e.preventDefault();
 
-    // Lift up task title to submitTask().
-    this.props.submitTask( this.state.title );
+    // Tell action creator to add new task.
+    MTActions.submitTask( this.state.title );
+
+    // // Lift up task title to submitTask().
+    // this.props.submitTask( this.state.title );
 
     // Reset the input.
     this.setState({
@@ -101,7 +105,7 @@ class MTAddTodo extends Component {
  * @type {Object}
  */
 MTAddTodo.propTypes = {
-  submitTask: PropTypes.func.isRequired,
+  // submitTask: PropTypes.func.isRequired,
 }
 
 export default MTAddTodo;
