@@ -1,0 +1,179 @@
+// Import dependencies.
+@import './../modules/variables';
+@import './../modules/mixins';
+
+// TodoItem container.
+.mt-todoitem {
+  position: relative;
+  font-size: 1.2em;
+  color: $input-text-color;
+  padding-right: 60px;
+  display: flex;
+  align-items: center;
+
+  // TodoItem existing children.
+  &__checkbox,
+  &__label,
+  &__input {
+    position: relative;
+    display: inline-block;
+  }
+
+  // Label item.
+  &__label {
+    padding: 15px 0;
+
+    &--completed {
+      color: #8e969c;
+      text-decoration: line-through;
+    }
+  }
+
+  // Actions item.
+  &__actions {
+    display: none;
+    position: absolute;
+    right: 0;
+    text-align: right;
+    line-height: 0;
+
+    button {
+      // Reset button element appereance.
+      cursor: pointer;
+      border: none;
+      outline: none;
+      background: transparent;
+      padding: 0;
+
+      margin-left: 10px;
+    }
+  }
+
+  // Actions on hover.
+  &:hover &__actions {
+    display: block;
+  }
+
+  // Input item.
+  &__input {
+    width: 100%;
+
+    // Input tag.
+    input {
+      // Reset input element appereance.
+      border: none;
+      outline: none;
+      border-bottom: 2px solid #0fb9b1;
+
+      font-size: 1em;
+      width: 100%;
+      color: #485056;
+      box-sizing: border-box;
+      transition: all ease 0.3s;
+      font-family: 'Source Sans Pro', sans-serif;
+      padding: 15px 0 13px;
+
+      &::-webkit-input-placeholder {
+        color: #8e969c;
+      }
+    }
+
+    // Submit button.
+    &__save {
+      // Reset button element appereance.
+      cursor: pointer;
+      border: none;
+      outline: none;
+      background: transparent;
+      padding: 0;
+
+      position: absolute;
+      line-height: 0;
+      top: 16px;
+      right: -30px;
+    }
+  }
+
+  // Custom checkbox container.
+  &__checkbox {
+    position: relative;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    min-width: 25px;
+    height: 25px;
+    margin-right: 15px;
+
+    // Hide the browser's default checkbox.
+    input {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    // Create a custom checkmark.
+    &__checkmark {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 25px;
+      width: 25px;
+      border-radius: 25px;
+      background-color: #eee;
+    }
+
+    // On mouse-over, add a primary background color.
+    &:hover input ~ &__checkmark {
+      background-color: $primary_color;
+    }
+
+    // On mouse-over when checkbox is active, set transparent background color.
+    &:hover input:checked ~ &__checkmark {
+      background-color: transparent;
+    }
+
+    // On mouse-over, set transparent border color to hide the checkmark.
+    &:hover input ~ &__checkmark:after {
+      border-color: transparent;
+    }
+
+    // On mouse-over when checkbox is active, set primary border color to display the checkmark.
+    &:hover input:checked ~ &__checkmark:after {
+      display: block;
+      border-color: $primary_color;
+    }
+
+    // When the checkbox is checked, add a blue background.
+    input:checked ~ &__checkmark {
+      background-color: transparent;
+    }
+
+    // Create the checkmark/indicator (hidden when not checked).
+    &__checkmark:after {
+      content: "";
+      position: absolute;
+      display: none;
+    }
+
+    // Show the checkmark when checked.
+    input:checked ~ &__checkmark:after {
+      display: block;
+    }
+
+    // Style the checkmark/indicator.
+    &__checkmark:after {
+      display: none;
+      left: 6px;
+      top: 1px;
+      width: 8px;
+      height: 17px;
+      border: solid rgba(43, 203, 186, 0.6);
+      border-width: 0 3px 3px 0;
+      -webkit-transform: rotate(40deg);
+      -ms-transform: rotate(40deg);
+      transform: rotate(40deg);
+    }
+  }
+}

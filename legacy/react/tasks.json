@@ -1,0 +1,17 @@
+[
+  {
+    "id": "atquj",
+    "title": "Create basic mockup",
+    "active": false
+  },
+  {
+    "id": "2qdji",
+    "title": "Determine components hierarchy",
+    "active": true
+  },
+  {
+    "id": "4ilwep",
+    "title": "Build static version based on the mockup and components hierarchy",
+    "active": true
+  }
+]

@@ -1,0 +1,17 @@
+/**
+ * Render styles for filters link.
+ *
+ * @param  {list} $pages Pages list.
+ */
+@mixin list-page-active( $pages ) {
+  @each $page in $pages {
+    // Filters link when active.
+    .mt-todolist__filters--#{$page} ##{$page} {
+      color: rgba(43, 203, 186, 0.6);
+
+      &:hover {
+        color: $primary-color;
+      }
+    }
+  }
+}

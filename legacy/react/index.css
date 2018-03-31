@@ -1,0 +1,15 @@
+body {
+	margin: 0;
+	padding: 0;
+	background-color: #2bcbba;
+	color: #333333;
+	font-family: 'Source Sans Pro', sans-serif;
+}
+
+div {
+	box-sizing: border-box;
+}
+
+#myt-app {
+	margin: 45px 0;
+}
