@@ -8,4 +8,10 @@
   -webkit-box-shadow: 10px 10px 50px 0px rgba(70, 70, 70, 0.3);
   -moz-box-shadow: 10px 10px 50px 0px rgba(70, 70, 70, 0.3);
   box-shadow: 10px 10px 50px 0px rgba(70, 70, 70, 0.3);
+
+  // Mobile.
+  @media (max-width: 767px) {
+    width: 100%;
+    padding: 20px;
+  }
 }

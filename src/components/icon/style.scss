@@ -6,5 +6,9 @@
   // SVG icon.
   svg {
     fill: currentColor;
+
+    @media (max-width: 767px) {
+      width: 16px;
+    }
   }
 }

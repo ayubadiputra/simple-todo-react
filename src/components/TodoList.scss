@@ -4,12 +4,19 @@
 
 // TodoList container.
 .mt-todolist {
+  transition: all ease 0.3s;
 
   // TodoList items.
   &__list {
     list-style-type: none;
     padding-left: 0;
     margin-top: 30px;
+  }
+
+  @media (max-width: 767px) {
+    &__list {
+      margin-top: 15px;
+    }
   }
 
   // TodoList filters.
