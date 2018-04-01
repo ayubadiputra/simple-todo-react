@@ -8,6 +8,11 @@ import Icon from './icon';
 import './TodoItem.scss';
 
 /**
+ * Import Flux dependencies.
+ */
+import MTActions from './../actions';
+
+/**
  * Import utilities.
  */
 import isEqual from 'lodash/isEqual';
@@ -53,6 +58,16 @@ class MTTodoItem extends Component {
   }
 
   /**
+   * Hooks componentDidUpdate function.
+   */
+  componentDidUpdate() {
+    // Focus on the input when the task is editing.
+    if ( this.state.edit ) {
+      this.textInput.focus();
+    }
+  }
+
+  /**
    * Hooks shouldComponentUpdate.
    *
    * Avoid unnecessary rerendering component.
@@ -84,8 +99,37 @@ class MTTodoItem extends Component {
    * @param {object} e Current target element.
    */
   handleComplete(e) {
-    // Lift up task ID and active status to completeTask().
-    this.props.completeTask( this.id, e.target.checked );
+    // Tell action creator to mark/unmark selected task.
+    MTActions.completeTask({ id: this.id, active: ! e.target.checked });
+  }
+
+  /**
+   * Handle remove task event.
+   *
+   * @param {object} e Current target element.
+   */
+  handleRemove(e) {
+    e.preventDefault();
+
+    // Tell action creator to remove selected task.
+    MTActions.removeTask( this.id );
+  }
+
+  /**
+   * Handle update task event.
+   *
+   * @param {object} e Current target element.
+   */
+  handleUpdate(e) {
+    e.preventDefault();
+
+    // Tell action creator to update current task title based on submitted title.
+    MTActions.updateTask({ id: this.id, title: this.state.title });
+
+    // Set edit state as false to close the input.
+    this.setState({
+      edit: false,
+    });
   }
 
   /**
@@ -123,45 +167,6 @@ class MTTodoItem extends Component {
     this.setState({
       title: e.target.value,
     });
-  }
-
-  /**
-   * Handle update task event.
-   *
-   * @param {object} e Current target element.
-   */
-  handleUpdate(e) {
-    e.preventDefault();
-
-    // Lift up task ID and active status to updateTask().
-    this.props.updateTask( this.id, this.state.title );
-
-    // Set edit state as false to close the input.
-    this.setState({
-      edit: false,
-    });
-  }
-
-  /**
-   * Handle remove task event.
-   *
-   * @param {object} e Current target element.
-   */
-  handleRemove(e) {
-    e.preventDefault();
-
-    // Lift up task ID to removeTask().
-    this.props.removeTask( this.id );
-  }
-
-  /**
-   * Hooks componentDidUpdate function.
-   */
-  componentDidUpdate() {
-    // Focus on the input when the task is editing.
-    if ( this.state.edit ) {
-      this.textInput.focus();
-    }
   }
 
   /**
@@ -228,9 +233,6 @@ class MTTodoItem extends Component {
  */
 MTTodoItem.propTypes = {
   task: PropTypes.object.isRequired,
-  completeTask: PropTypes.func.isRequired,
-  updateTask: PropTypes.func.isRequired,
-  removeTask: PropTypes.func.isRequired,
 }
 
 export default MTTodoItem;

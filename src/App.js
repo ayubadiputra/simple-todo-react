@@ -7,16 +7,19 @@ import MTTodoList from './components/TodoList';
 import './App.scss';
 
 /**
- * Import utilities.
+ * Import Flux dependencies.
  */
-import uniqid from 'uniqid';
-import mapKeys from 'lodash/mapKeys';
-import has from 'lodash/has';
+import MTStore from './stores';
 
 /**
- * Import dummy data for demo.
+ * Import constants.
  */
-import tasks from './tasks.json';
+import {
+  SUBMIT_TASK,
+  COMPLETE_TASK,
+  UPDATE_TASK,
+  REMOVE_TASK,
+} from './constants';
 
 /**
  * Main App.
@@ -36,14 +39,29 @@ class App extends Component {
 
     // Initiate states.
     this.state = {
-      tasks,
+      tasks: MTStore.getAll(),
     };
 
     // Events handler.
-    this.onTaskSubmit = this.onTaskSubmit.bind( this );
-    this.onTaskCompleted = this.onTaskCompleted.bind( this );
-    this.onTaskUpdated = this.onTaskUpdated.bind( this );
-    this.onTaskRemoved = this.onTaskRemoved.bind( this );
+    this.onTasksUpdated = this.onTasksUpdated.bind( this );
+
+    // this.onTaskCompleted = this.onTaskCompleted.bind( this );
+    // this.onTaskUpdated = this.onTaskUpdated.bind( this );
+    // this.onTaskRemoved = this.onTaskRemoved.bind( this );
+  }
+
+  componentDidMount() {
+    MTStore.addChangeListener( SUBMIT_TASK, this.onTasksUpdated );
+    MTStore.addChangeListener( COMPLETE_TASK, this.onTasksUpdated );
+    MTStore.addChangeListener( UPDATE_TASK, this.onTasksUpdated );
+    MTStore.addChangeListener( REMOVE_TASK, this.onTasksUpdated );
+  }
+
+  componentWillUnmount() {
+    MTStore.removeChangeListener( SUBMIT_TASK, this.onTasksUpdated );
+    MTStore.removeChangeListener( COMPLETE_TASK, this.onTasksUpdated );
+    MTStore.removeChangeListener( UPDATE_TASK, this.onTasksUpdated );
+    MTStore.removeChangeListener( REMOVE_TASK, this.onTasksUpdated );
   }
 
   /**
@@ -51,17 +69,11 @@ class App extends Component {
    *
    * @param {string} title New task title.
    */
-  onTaskSubmit( title ) {
-    // Initiate the object data.
-    const data = {
-      id: uniqid(),
-      title: title,
-      active: true,
-    };
-
+  onTasksUpdated() {
     // Add new task to the list (appending not mutating).
     this.setState({
-      tasks: [...this.state.tasks, data],
+      tasks: MTStore.getAll(),
+      // tasks: [...this.state.tasks, data],
     });
   }
 
@@ -71,9 +83,9 @@ class App extends Component {
    * @param {string}  id     Task ID.
    * @param {boolean} active Task status.
    */
-  onTaskCompleted( id, active ) {
-    this.updateSingleTaskProperty( id, 'active', ! active );
-  }
+  // onTaskCompleted( id, active ) {
+    // this.updateSingleTaskProperty( id, 'active', ! active );
+  // }
 
   /**
    * Update task title based on the task ID.
@@ -81,17 +93,17 @@ class App extends Component {
    * @param {string}  id    Task ID.
    * @param {boolean} title Task title.
    */
-  onTaskUpdated( id, title ) {
-    this.updateSingleTaskProperty( id, 'title', title );
-  }
+  // onTaskUpdated( id, title ) {
+  //   this.updateSingleTaskProperty( id, 'title', title );
+  // }
 
   /**
    * Remove task from the list based on the task ID.
    *
    * @param {string} id Task ID.
    */
-  onTaskRemoved( id ) {
-    let tasks = this.state.tasks;
+  // onTaskRemoved( id ) {
+  //   let tasks = this.state.tasks;
 
     /**
      * Remove task recursively.
@@ -101,20 +113,20 @@ class App extends Component {
      * - FIXED: Not working with shouldComponentUpdate because the task object is
      *          mutated. It's fixed by applying spread variable to update task title.
      */
-    mapKeys( tasks, ( task, key ) => {
-      console.log('Delete')
-      // Find the task ID.
-      if ( has( task, 'id' ) && task.id === id ) {
-         // Remove the task.
-        tasks.splice( key, 1 );
-      }
-    } );
+    // mapKeys( tasks, ( task, key ) => {
+    //   console.log('Delete')
+    //   // Find the task ID.
+    //   if ( has( task, 'id' ) && task.id === id ) {
+    //      // Remove the task.
+    //     tasks.splice( key, 1 );
+    //   }
+    // } );
 
     // Update existing tasks.
-    this.setState({
-      tasks,
-    });
-  }
+  //   this.setState({
+  //     tasks,
+  //   });
+  // }
 
   /**
    * Update single task property.
@@ -123,8 +135,8 @@ class App extends Component {
    * @param  {string} taskKey   Task property.
    * @param  {mixed}  taskValue New task property value
    */
-  updateSingleTaskProperty( id, taskKey, taskValue ) {
-    let tasks = this.state.tasks;
+  // updateSingleTaskProperty( id, taskKey, taskValue ) {
+  //   let tasks = this.state.tasks;
 
     /**
      * Update task property by checking the items recursively.
@@ -134,20 +146,20 @@ class App extends Component {
      * - FIXED: Not working with shouldComponentUpdate because the task object is
      *          mutated. It's fixed by applying spread variable to update task status.
      */
-    mapKeys( tasks, ( task, key ) => {
-      // Find the task ID.
-      if ( task.id === id ) {
-        // Update the task status.
-        task = {...task, [taskKey]: taskValue};
-        tasks[key] = task;
-      }
-    } );
+    // mapKeys( tasks, ( task, key ) => {
+    //   // Find the task ID.
+    //   if ( task.id === id ) {
+    //     // Update the task status.
+    //     task = {...task, [taskKey]: taskValue};
+    //     tasks[key] = task;
+    //   }
+    // } );
 
     // Update existing tasks.
-    this.setState({
-      tasks,
-    });
-  }
+  //   this.setState({
+  //     tasks,
+  //   });
+  // }
 
   /**
    * Render TodoList to display tasks list.
@@ -159,7 +171,7 @@ class App extends Component {
 
     return (
       <div className="mt-container">
-        <MTAddTodo submitTask={this.onTaskSubmit} />
+        <MTAddTodo />
         <MTTodoList tasks={tasks} completeTask={this.onTaskCompleted} updateTask={this.onTaskUpdated} removeTask={this.onTaskRemoved} />
       </div>
     );
