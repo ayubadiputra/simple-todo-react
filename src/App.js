@@ -4,19 +4,22 @@
 import React, { Component } from 'react';
 import MTAddTodo from './components/AddTodo';
 import MTTodoList from './components/TodoList';
+import './App.scss';
+
+/**
+ * Import Flux dependencies.
+ */
 import MTStore from './stores';
+
+/**
+ * Import constants.
+ */
 import {
   SUBMIT_TASK,
   COMPLETE_TASK,
   UPDATE_TASK,
   REMOVE_TASK,
 } from './constants';
-import './App.scss';
-
-/**
- * Import dummy data for demo.
- */
-import tasks from './tasks.json';
 
 /**
  * Main App.
@@ -36,7 +39,7 @@ class App extends Component {
 
     // Initiate states.
     this.state = {
-      tasks,
+      tasks: MTStore.getAll(),
     };
 
     // Events handler.

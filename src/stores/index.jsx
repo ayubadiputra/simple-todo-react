@@ -1,8 +1,16 @@
 /**
  * Import dependencies.
  */
-import MTDispatcher from './../dispatcher';
 import { EventEmitter } from 'events';
+
+/**
+ * Import Flux dependencies.
+ */
+import MTDispatcher from './../dispatcher';
+
+/**
+ * Import constants.
+ */
 import {
   SUBMIT_TASK,
   COMPLETE_TASK,
@@ -24,12 +32,95 @@ import tasks from './../tasks.json';
 
 let _tasks = tasks;
 
+/**
+ * Flux store.
+ *
+ * Handle data processing and emit events to listeners (components that subscribed).
+ *
+ * @since 0.0.1
+ */
 class MTStore extends EventEmitter {
+  /**
+   * The constructor.
+   */
   constructor() {
     super();
+    // Dispatcher register store callback.
     this.dispatchToken = MTDispatcher.register( this.dispatcherCallback.bind( this ) );
   }
 
+  /*============================================================
+   * EVENTS EMITTER
+   *
+   * Emit specific event to listener (components that subscribed).
+   *============================================================*/
+
+  /**
+   * Emit event for submitting new task.
+   */
+  emitSubmitChange() {
+    this.emit( SUBMIT_TASK );
+  }
+
+  /**
+   * Emit event for completing specific task.
+   */
+  emitCompleteChange() {
+    this.emit( COMPLETE_TASK );
+  }
+
+  /**
+   * Emit event for updating specific task title.
+   */
+  emitUpdateChange() {
+    this.emit( UPDATE_TASK );
+  }
+
+  /**
+   * Emit event for removing specific task.
+   */
+  emitRemoveChange() {
+    this.emit( REMOVE_TASK );
+  }
+
+  /*============================================================
+   * REGISTER/UNREGISTER EVENTS
+   *
+   * Used by components to subscribe on specific events. When
+   * component will unmount, the subscription will be removed.
+   *============================================================*/
+
+   /**
+    * Subscribes on specific event.
+    *
+    * @param {string}   event    Event name.
+    * @param {Function} callback Function callback of component.
+    */
+  addChangeListener( event, callback ) {
+    this.on( event, callback );
+  }
+
+  /**
+    * Unsubscribes on specific event.
+    *
+    * @param {string}   event    Event name.
+    * @param {Function} callback Function callback of component.
+    */
+  removeChangeListener( event, callback ) {
+    this.removeListener( event, callback );
+  }
+
+  /*============================================================
+   * LIST OF DISPATCH CALLBACK
+   *
+   * Called by dispatcher after specific event is triggered.
+   *============================================================*/
+
+  /**
+   * Submit new task to "local" tasks list.
+   *
+   * @param {string} title New task title.
+   */
   submitTask( title ) {
     // Initiate the object data.
     const data = {
@@ -38,18 +129,33 @@ class MTStore extends EventEmitter {
       active: true,
     };
 
-    // Add new task to the list (appending not mutating).
+    // Add new task to "local" list (appending not mutating).
     _tasks = [..._tasks, data];
   }
 
+  /**
+   * Toggle task in "local" tasks list based on the task ID.
+   *
+   * @param {object} data Task ID and active status.
+   */
   completeTask( data ) {
     this.updateSingleTaskProperty( data.id, 'active', data.active );
   }
 
+  /**
+   * Update specific task title in "local" tasks list based on the task ID.
+   *
+   * @param {object} data Task ID and new title.
+   */
   updateTask( data ) {
     this.updateSingleTaskProperty( data.id, 'title', data.title );
   }
 
+  /**
+   * Remove task from "local" list based on the task ID.
+   *
+   * @param {string} id Task ID.
+   */
   removeTask( id ) {
     /**
      * Remove task recursively.
@@ -66,10 +172,6 @@ class MTStore extends EventEmitter {
         _tasks.splice( key, 1 );
       }
     } );
-  }
-
-  getAll() {
-    return _tasks;
   }
 
   /**
@@ -96,37 +198,26 @@ class MTStore extends EventEmitter {
         _tasks[key] = task;
       }
     } );
-
-    // Update existing tasks.
-    // this.setState({
-    //   tasks,
-    // });
   }
 
-  emitSubmitChange() {
-    this.emit( SUBMIT_TASK );
+  /**
+   * Return "local" tasks list.
+   *
+   * @return {array} Local tasks list.
+   */
+  getAll() {
+    return _tasks;
   }
 
-  emitCompleteChange() {
-    this.emit( COMPLETE_TASK );
-  }
-
-  emitUpdateChange() {
-    this.emit( UPDATE_TASK );
-  }
-
-  emitRemoveChange() {
-    this.emit( REMOVE_TASK );
-  }
-
-  addChangeListener( event, callback ) {
-    this.on( event, callback );
-  }
-
-  removeChangeListener( event, callback ) {
-    this.removeListener( event, callback );
-  }
-
+  /**
+   * Dispatcher callback.
+   *
+   * When an action is called, the action will ask dispatcher to run the callback
+   * and emit the event to listener.
+   *
+   * @param  {object} action Action type and additional data.
+   * @return {boolean}       Flag about the callback.
+   */
   dispatcherCallback( action ) {
     switch ( action.type ) {
       case SUBMIT_TASK:
@@ -148,6 +239,9 @@ class MTStore extends EventEmitter {
         this.removeTask( action.id );
         this.emitRemoveChange();
         break;
+
+      default:
+        return false;
     }
 
     return true;

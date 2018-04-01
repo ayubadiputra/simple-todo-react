@@ -2,9 +2,12 @@
  * Import dependencies.
  */
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import MTActions from './../actions';
 import './AddTodo.scss';
+
+/**
+ * Import Flux dependencies.
+ */
+import MTActions from './../actions';
 
 /**
  * AddTodo component.
@@ -68,11 +71,8 @@ class MTAddTodo extends Component {
   handleSubmit(e) {
     e.preventDefault();
 
-    // Tell action creator to add new task.
+    // Tell action creator to add new task based on submitted title.
     MTActions.submitTask( this.state.title );
-
-    // // Lift up task title to submitTask().
-    // this.props.submitTask( this.state.title );
 
     // Reset the input.
     this.setState({
@@ -97,15 +97,6 @@ class MTAddTodo extends Component {
       </div>
     );
   }
-}
-
-/**
- * Validate props data type.
- *
- * @type {Object}
- */
-MTAddTodo.propTypes = {
-  // submitTask: PropTypes.func.isRequired,
 }
 
 export default MTAddTodo;

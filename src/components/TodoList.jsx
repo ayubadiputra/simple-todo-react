@@ -54,7 +54,7 @@ class MTTodoList extends Component {
    */
   getItem( task ) {
     return (
-      <MTTodoItem key={task.id} task={task} completeTask={this.props.completeTask} updateTask={this.props.updateTask} removeTask={this.props.removeTask} />
+      <MTTodoItem key={task.id} task={task} />
     );
   }
 
@@ -120,9 +120,6 @@ class MTTodoList extends Component {
  */
 MTTodoList.propTypes = {
   tasks: PropTypes.array.isRequired,
-  completeTask: PropTypes.func.isRequired,
-  updateTask: PropTypes.func.isRequired,
-  removeTask: PropTypes.func.isRequired,
 }
 
 export default MTTodoList;
