@@ -4,7 +4,7 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import MTIcon from './icon';
+import MTButtonIcon from './buttonIcon';
 import './TodoItem.scss';
 
 /**
@@ -243,20 +243,14 @@ class MTTodoItem extends Component {
             onChange={this.handleChange}
           />
 
-          <button type="submit" className="mt-todoitem__input__save">
-            <MTIcon name="save" color="#3498db" size={20}/>
-          </button>
+          <MTButtonIcon type="submit" className="mt-todoitem__input__save" iconName="save" iconColor="#3498db" iconSize={20} />
         </form> }
 
         <div className="mt-todoitem__actions">
           { ! editable &&
-          <button className="mt-todoitem__actions__edit" onClick={this.handleEdit}>
-            <MTIcon name="edit" color="#00b894" size={20}/>
-          </button> }
+          <MTButtonIcon className="mt-todoitem__actions__edit" onClick={this.handleEdit} iconName="edit" iconColor="#00b894" iconSize={20} /> }
 
-          <button className="mt-todoitem__actions__remove" onClick={this.handleRemove}>
-            <MTIcon name="trash" color="#d63031" size={20} />
-          </button>
+          <MTButtonIcon className="mt-todoitem__actions__remove" onClick={this.handleRemove} iconName="trash" iconColor="#d63031" iconSize={20} />
         </div>
       </li>
     );
