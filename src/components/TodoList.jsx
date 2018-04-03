@@ -18,7 +18,7 @@ class MTTodoList extends Component {
   /**
    * The constructor.
    *
-   * @param {object} props Object props.
+   * @param {Object} props Object props.
    */
   constructor( props ) {
     super( props );
@@ -35,7 +35,7 @@ class MTTodoList extends Component {
   /**
    * Handle change page event.
    *
-   * @param {object} e Current target element.
+   * @param {Object} e Current target element.
    */
   handlePage(e) {
     e.preventDefault();
@@ -49,8 +49,8 @@ class MTTodoList extends Component {
   /**
    * Get task item complete with the props.
    *
-   * @param  {object} task Current object task.
-   * @return {string}      HTML tag for the task item.
+   * @param  {Object} task Current object task.
+   * @return {String}      HTML tag for the task item.
    */
   getItem( task ) {
     return (
@@ -61,16 +61,16 @@ class MTTodoList extends Component {
   /**
    * Render TodoList to display tasks list.
    *
-   * @return {string} TodoList HTML tags.
+   * @return {String} TodoList HTML tags.
    */
   render() {
     // Initiate tasks and page.
-    const tasks = this.props.tasks;
-    const page = this.state.page;
+    const { tasks } = this.props;
+    const { page } = this.state;
 
     // Set class names.
     const pageClass = 'mt-todolist__filters--' + page;
-    const activePage = classNames({
+    const activePageClass = classNames({
       'mt-todolist__filters': true,
       [pageClass]: true,
     });
@@ -103,7 +103,7 @@ class MTTodoList extends Component {
         <ul className="mt-todolist__list">
           {render}
         </ul>
-        <div className={activePage}>
+        <div className={activePageClass}>
           <a id="all" href="#all" onClick={this.handlePage}>All</a>
           <a id="active" href="#active" onClick={this.handlePage}>Active</a>
           <a id="completed" href="#completed" onClick={this.handlePage}>Completed</a>

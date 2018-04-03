@@ -45,6 +45,7 @@ class MTStore extends EventEmitter {
    */
   constructor() {
     super();
+
     // Dispatcher register store callback.
     this.dispatchToken = MTDispatcher.register( this.dispatcherCallback.bind( this ) );
   }
@@ -93,7 +94,7 @@ class MTStore extends EventEmitter {
    /**
     * Subscribes on specific event.
     *
-    * @param {string}   event    Event name.
+    * @param {String}   event    Event name.
     * @param {Function} callback Function callback of component.
     */
   addChangeListener( event, callback ) {
@@ -103,7 +104,7 @@ class MTStore extends EventEmitter {
   /**
     * Unsubscribes on specific event.
     *
-    * @param {string}   event    Event name.
+    * @param {String}   event    Event name.
     * @param {Function} callback Function callback of component.
     */
   removeChangeListener( event, callback ) {
@@ -119,14 +120,14 @@ class MTStore extends EventEmitter {
   /**
    * Submit new task to "local" tasks list.
    *
-   * @param {string} title New task title.
+   * @param {String} title New task title.
    */
   submitTask( title ) {
     // Initiate the object data.
     const data = {
       id: uniqid(),
-      title: title,
       active: true,
+      title,
     };
 
     // Add new task to "local" list (appending not mutating).
@@ -136,7 +137,7 @@ class MTStore extends EventEmitter {
   /**
    * Toggle task in "local" tasks list based on the task ID.
    *
-   * @param {object} data Task ID and active status.
+   * @param {Object} data Task ID and active status.
    */
   completeTask( data ) {
     this.updateSingleTaskProperty( data.id, 'active', data.active );
@@ -145,7 +146,7 @@ class MTStore extends EventEmitter {
   /**
    * Update specific task title in "local" tasks list based on the task ID.
    *
-   * @param {object} data Task ID and new title.
+   * @param {Object} data Task ID and new title.
    */
   updateTask( data ) {
     this.updateSingleTaskProperty( data.id, 'title', data.title );
@@ -154,7 +155,7 @@ class MTStore extends EventEmitter {
   /**
    * Remove task from "local" list based on the task ID.
    *
-   * @param {string} id Task ID.
+   * @param {String} id Task ID.
    */
   removeTask( id ) {
     /**
@@ -177,9 +178,9 @@ class MTStore extends EventEmitter {
   /**
    * Update single task property.
    *
-   * @param  {string} id        Task ID.
-   * @param  {string} taskKey   Task property.
-   * @param  {mixed}  taskValue New task property value
+   * @param  {String} id        Task ID.
+   * @param  {String} taskKey   Task property.
+   * @param  {Mixed}  taskValue New task property value
    */
   updateSingleTaskProperty( id, taskKey, taskValue ) {
     /**
@@ -188,12 +189,12 @@ class MTStore extends EventEmitter {
      * @todo Need to find better way to fix this!!!
      * - TODO:  Don't run looping just to update the value, imagine we have 1000 tasks!
      * - FIXED: Not working with shouldComponentUpdate because the task object is
-     *          mutated. It's fixed by applying spread variable to update task status.
+     *          mutated. It's fixed by applying spread variable to update task property.
      */
     mapKeys( _tasks, ( task, key ) => {
       // Find the task ID.
       if ( task.id === id ) {
-        // Update the task status.
+        // Update the task property.
         task = {...task, [taskKey]: taskValue};
         _tasks[key] = task;
       }
@@ -203,7 +204,7 @@ class MTStore extends EventEmitter {
   /**
    * Return "local" tasks list.
    *
-   * @return {array} Local tasks list.
+   * @return {Array} Local tasks list.
    */
   getAll() {
     return _tasks;
@@ -215,26 +216,31 @@ class MTStore extends EventEmitter {
    * When an action is called, the action will ask dispatcher to run the callback
    * and emit the event to listener.
    *
-   * @param  {object} action Action type and additional data.
-   * @return {boolean}       Flag about the callback.
+   * @param  {Object} action Action type and additional data.
+   * @return {Boolean}       Flag about the callback.
    */
   dispatcherCallback( action ) {
     switch ( action.type ) {
+
+      // Submit new task.
       case SUBMIT_TASK:
         this.submitTask( action.title );
         this.emitSubmitChange();
         break;
 
+      // Complete existing task.
       case COMPLETE_TASK:
         this.completeTask( action.data );
         this.emitCompleteChange();
         break;
 
+      // Update task title.
       case UPDATE_TASK:
         this.updateTask( action.data );
         this.emitUpdateChange();
         break;
 
+      // Remove existing task.
       case REMOVE_TASK:
         this.removeTask( action.id );
         this.emitRemoveChange();

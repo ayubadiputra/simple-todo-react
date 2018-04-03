@@ -4,7 +4,7 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import Icon from './icon';
+import MTIcon from './icon';
 import './TodoItem.scss';
 
 /**
@@ -28,21 +28,25 @@ class MTTodoItem extends Component {
   /**
    * The constructor.
    *
-   * @param {object} props Object props.
+   * @param {Object} props Object props.
    */
   constructor( props ) {
     super( props );
 
-    const task = this.props.task;
+    // Declare vars.
+    const {
+      title,
+      id,
+    } = this.props.task;
 
     // Initiate states.
     this.state = {
       edit: false,
-      title: task.title,
+      title,
     };
 
     // Add class property.
-    this.id = task.id;
+    this.id = id;
 
     // Complete task event handler.
     this.handleComplete = this.handleComplete.bind( this );
@@ -61,8 +65,11 @@ class MTTodoItem extends Component {
    * Hooks componentDidUpdate function.
    */
   componentDidUpdate() {
+    // Declare vars.
+    const { edit } = this.state;
+
     // Focus on the input when the task is editing.
-    if ( this.state.edit ) {
+    if ( edit ) {
       this.textInput.focus();
     }
   }
@@ -72,21 +79,37 @@ class MTTodoItem extends Component {
    *
    * Avoid unnecessary rerendering component.
    *
-   * @return {boolean} Return false if component doesn't need rerendering.
+   * @param  {Object} nextProps Props object.
+   * @param  {Object} nextState State object.
+   * @return {Boolean} Return false if component doesn't need rerendering.
    */
   shouldComponentUpdate( nextProps, nextState ) {
+    // Declare vars.
+    const {
+      edit,
+      title,
+    } = this.state;
+
+    const {
+      edit: nextEdit,
+      title: nextTitle,
+    } = nextState;
+
+    const { task } = this.props;
+    const { task: nextTask } = nextProps;
+
     // When user click on update icon.
-    if ( this.state.edit !== nextState.edit ) {
+    if ( edit !== nextEdit ) {
       return true;
     }
 
     // When user is writing on the task title input.
-    if ( this.state.title !== nextState.title ) {
+    if ( title !== nextTitle ) {
       return true;
     }
 
     // When tasks list is updated because current task was completed.
-    if ( ! isEqual( this.props.task, nextProps.task ) ) {
+    if ( ! isEqual( task, nextTask ) ) {
       return true;
     }
 
@@ -96,17 +119,20 @@ class MTTodoItem extends Component {
   /**
    * Handle complete task event.
    *
-   * @param {object} e Current target element.
+   * @param {Object} e Current target element.
    */
   handleComplete(e) {
+    // Declare vars.
+    const { id } = this;
+
     // Tell action creator to mark/unmark selected task.
-    MTActions.completeTask({ id: this.id, active: ! e.target.checked });
+    MTActions.completeTask({ id, active: ! e.target.checked });
   }
 
   /**
    * Handle remove task event.
    *
-   * @param {object} e Current target element.
+   * @param {Object} e Current target element.
    */
   handleRemove(e) {
     e.preventDefault();
@@ -118,13 +144,17 @@ class MTTodoItem extends Component {
   /**
    * Handle update task event.
    *
-   * @param {object} e Current target element.
+   * @param {Object} e Current target element.
    */
   handleUpdate(e) {
     e.preventDefault();
 
+    // Declare vars.
+    const { id } = this;
+    const { title } = this.state;
+
     // Tell action creator to update current task title based on submitted title.
-    MTActions.updateTask({ id: this.id, title: this.state.title });
+    MTActions.updateTask({ id, title });
 
     // Set edit state as false to close the input.
     this.setState({
@@ -135,7 +165,7 @@ class MTTodoItem extends Component {
   /**
    * Handle edit task event.
    *
-   * @param {object} e Current target element.
+   * @param {Object} e Current target element.
    */
   handleEdit(e) {
     // Update edit state to render the input.
@@ -149,7 +179,7 @@ class MTTodoItem extends Component {
    *
    * Focus on the last chars on the input.
    *
-   * @param {object} e Current target element.
+   * @param {Object} e Current target element.
    */
   handleFocus(e) {
     const title = e.target.value;
@@ -160,7 +190,7 @@ class MTTodoItem extends Component {
   /**
    * Handle change task event.
    *
-   * @param {object} e Current target element.
+   * @param {Object} e Current target element.
    */
   handleChange(e) {
     // Update title state to render the input.
@@ -172,53 +202,60 @@ class MTTodoItem extends Component {
   /**
    * Render TodoItem to display title task with the actions.
    *
-   * @return {string} TodoItem HTML tags.
+   * @return {String} TodoItem HTML tags.
    */
   render() {
     // Fetch task object.
-    const task = this.props.task;
-    const editable = this.state.edit;
+    const {
+      active,
+      title,
+    } = this.props.task;
+
+    const {
+      edit: editable,
+      title: currentTitle,
+    } = this.state;
 
     // Label class names.
     const labelClass = classNames({
       'mt-todoitem__label': true,
-      'mt-todoitem__label--completed': ! task.active,
+      'mt-todoitem__label--completed': ! active,
     });
 
     return (
       <li className="mt-todoitem">
         <label className="mt-todoitem__checkbox">
-          <input type="checkbox" defaultChecked={ ! task.active } onClick={this.handleComplete} />
+          <input type="checkbox" defaultChecked={ ! active } onClick={this.handleComplete} />
           <span className="mt-todoitem__checkbox__checkmark"></span>
         </label>
 
         { ! editable &&
         <label className={labelClass}>
-          {task.title}
+          {title}
         </label> }
 
         { editable &&
         <form className="mt-todoitem__input" onSubmit={this.handleUpdate}>
           <input
-            value={this.state.title}
+            value={currentTitle}
             ref={ input => this.textInput = input }
             onFocus={this.handleFocus}
             onChange={this.handleChange}
           />
 
           <button type="submit" className="mt-todoitem__input__save">
-            <Icon name="save" color="#3498db" size={20}/>
+            <MTIcon name="save" color="#3498db" size={20}/>
           </button>
         </form> }
 
         <div className="mt-todoitem__actions">
           { ! editable &&
           <button className="mt-todoitem__actions__edit" onClick={this.handleEdit}>
-            <Icon name="edit" color="#00b894" size={20}/>
+            <MTIcon name="edit" color="#00b894" size={20}/>
           </button> }
 
           <button className="mt-todoitem__actions__remove" onClick={this.handleRemove}>
-            <Icon name="trash" color="#d63031" size={20} />
+            <MTIcon name="trash" color="#d63031" size={20} />
           </button>
         </div>
       </li>

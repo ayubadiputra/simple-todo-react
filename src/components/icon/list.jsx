@@ -6,8 +6,8 @@ import React from 'react';
 /**
  * Get SVG icon based on the icon name.
  *
- * @param  {string} name Icon name.
- * @return {string|null} SVG icon string.
+ * @param  {String} name Icon name.
+ * @return {String|Null} SVG icon string.
  */
 const MTGetIcon = name => {
   // Check icon name.

@@ -32,7 +32,7 @@ class App extends Component {
   /**
    * The constructor.
    *
-   * @param {object} props Object props.
+   * @param {Object} props Object props.
    */
   constructor( props ) {
     super( props );
@@ -46,6 +46,11 @@ class App extends Component {
     this.onTasksUpdated = this.onTasksUpdated.bind( this );
   }
 
+  /**
+   * Run actions after component mounted.
+   *
+   * Subscribes to events for specific data changes.
+   */
   componentDidMount() {
     MTStore.addChangeListener( SUBMIT_TASK, this.onTasksUpdated );
     MTStore.addChangeListener( COMPLETE_TASK, this.onTasksUpdated );
@@ -53,6 +58,11 @@ class App extends Component {
     MTStore.addChangeListener( REMOVE_TASK, this.onTasksUpdated );
   }
 
+  /**
+   * Run actions after component unmounted.
+   *
+   * Unsubscribes from previous subscribed events to reduce memory leak.
+   */
   componentWillUnmount() {
     MTStore.removeChangeListener( SUBMIT_TASK, this.onTasksUpdated );
     MTStore.removeChangeListener( COMPLETE_TASK, this.onTasksUpdated );
@@ -61,12 +71,10 @@ class App extends Component {
   }
 
   /**
-   * Submit new task to the tasks list.
-   *
-   * @param {string} title New task title.
+   * Update state based on changed tasks list store.
    */
   onTasksUpdated() {
-    // Add new task to the list (appending not mutating).
+    // Update tasks list state based on store data.
     this.setState({
       tasks: MTStore.getAll(),
     });
@@ -75,15 +83,15 @@ class App extends Component {
   /**
    * Render TodoList to display tasks list.
    *
-   * @return {string} TodoList HTML tags.
+   * @return {String} TodoList HTML tags.
    */
   render() {
-    const tasks = this.state.tasks;
+    const { tasks } = this.state;
 
     return (
       <div className="mt-container">
         <MTAddTodo />
-        <MTTodoList tasks={tasks} completeTask={this.onTaskCompleted} updateTask={this.onTaskUpdated} removeTask={this.onTaskRemoved} />
+        <MTTodoList tasks={tasks} />
       </div>
     );
   }

@@ -22,29 +22,34 @@ class MTIcon extends Component {
    * Once it's created, all the properties won't be changed. Consider to play any
    * effect or animation via CSS only. For example: hover or focus effect.
    *
-   * @return {boolean} Return false if component doesn't need rerendering.
+   * @return {Boolean} Return false if component doesn't need rerendering.
    */
-  shouldComponentUpdate( nextProps ) {
+  shouldComponentUpdate() {
     return false;
   }
 
   /**
    * Render icon container.
    *
-   * @return {string} Icon container with size and color.
+   * @return {String} Icon container with size and color.
    */
   render() {
     // Icon properties.
-    const iconSize = this.props.size;
-    const iconName = this.props.name;
+    const {
+      size,
+      name,
+      color,
+    } = this.props;
+
+    // Icon style.
     const iconStyles = {
-      color: this.props.color,
+      color,
     };
 
     return (
       <div className="mt-icon" style={iconStyles}>
-        <svg width={iconSize} height={iconSize} viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-          { MTGetIcon( iconName ) }
+        <svg width={size} height={size} viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
+          { MTGetIcon( name ) }
         </svg>
       </div>
     );

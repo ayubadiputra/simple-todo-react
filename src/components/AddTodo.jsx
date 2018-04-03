@@ -19,8 +19,6 @@ import MTActions from './../actions';
 class MTAddTodo extends Component {
   /**
    * The constructor.
-   *
-   * @param {object} props Object props.
    */
   constructor( props ) {
     super( props );
@@ -40,11 +38,15 @@ class MTAddTodo extends Component {
    *
    * Avoid unnecessary rerendering component.
    *
-   * @return {boolean} Return false if component doesn't need rerendering.
+   * @return {Boolean} Return false if component doesn't need rerendering.
    */
   shouldComponentUpdate( nextProps, nextState ) {
+    // Declare vars.
+    const { title } = this.state;
+    const { title: nextTitle } = nextState;
+
     // When user is writing the task title.
-    if ( this.state.title !== nextState.title ) {
+    if ( title !== nextTitle ) {
       return true;
     }
 
@@ -54,7 +56,7 @@ class MTAddTodo extends Component {
   /**
    * Handle change event.
    *
-   * @param {object} e Current target element.
+   * @param {Object} e Current target element.
    */
   handleChange(e) {
     // Update the title based on input value.
@@ -66,13 +68,16 @@ class MTAddTodo extends Component {
   /**
    * Handle submit event.
    *
-   * @param {object} e Current target element.
+   * @param {Object} e Current target element.
    */
   handleSubmit(e) {
     e.preventDefault();
 
+    // Declare vars.
+    const { title } = this.state;
+
     // Tell action creator to add new task based on submitted title.
-    MTActions.submitTask( this.state.title );
+    MTActions.submitTask( title );
 
     // Reset the input.
     this.setState({
@@ -83,16 +88,19 @@ class MTAddTodo extends Component {
   /**
    * Render AddTodo form to submit title task.
    *
-   * @return {string} AddTodo HTML tags.
+   * @return {String} AddTodo HTML tags.
    */
   render() {
+    // Declare vars.
+    const { title } = this.state;
+
     return (
       <div className="mt-addtodo">
         <h2 className="mt-addtodo__title">
           What do you want to do today?
         </h2>
         <form className="mt-addtodo__form" onSubmit={this.handleSubmit}>
-          <input type="text" className="mt-addtodo__form__input" placeholder="Type a task, then press enter ... " value={this.state.title} onChange={this.handleChange} />
+          <input type="text" className="mt-addtodo__form__input" placeholder="Type a task, then press enter ... " value={title} onChange={this.handleChange} />
         </form>
       </div>
     );

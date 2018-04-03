@@ -24,48 +24,48 @@ class MTActions {
   /**
    * Submit new task action.
    *
-   * @param {string} title New task title.
+   * @param {String} title New task title.
    */
   submitTask( title ) {
     MTDispatcher.dispatch({
       type: SUBMIT_TASK,
-      title: title,
+      title,
     });
   }
 
   /**
    * Complete existing task action.
    *
-   * @param {object} data Task details includes id and active status.
+   * @param {Object} data Task details includes id and active status.
    */
   completeTask( data ) {
     MTDispatcher.dispatch({
       type: COMPLETE_TASK,
-      data: data,
+      data,
     });
   }
 
   /**
    * Update task title action.
    *
-   * @param {object} data Task details includes id and new task title.
+   * @param {Object} data Task details includes id and new task title.
    */
   updateTask( data ) {
     MTDispatcher.dispatch({
       type: UPDATE_TASK,
-      data: data,
+      data,
     });
   }
 
   /**
    * Remove existing task action.
    *
-   * @param {string} id Task id will be removed.
+   * @param {String} id Task id will be removed.
    */
   removeTask( id ) {
     MTDispatcher.dispatch({
       type: REMOVE_TASK,
-      id: id,
+      id,
     });
   }
 }
